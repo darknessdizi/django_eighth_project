@@ -12,7 +12,7 @@ def api_client():
 @pytest.fixture
 def factory_course():
     def course(*args, **kwargs):
-        ans = baker.make('Course', *args, **kwargs)
+        ans = baker.make(Course, *args, **kwargs)
         return ans
     return course
 
@@ -22,6 +22,9 @@ def factory_student():
         return  baker.make(Student, *args, **kwargs)
     return student
 
-@pytest.fixture
-def change_max_students(settings):
-    settings.MAX_STUDENTS_PER_COURSE = True
+# @pytest.fixture
+# def change_max_students(value, settings):
+#     if value > settings.MAX_STUDENTS_PER_COURSE:
+#         assert False
+#     else:
+#         assert True
