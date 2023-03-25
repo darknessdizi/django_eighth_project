@@ -13,9 +13,12 @@ class CourseSerializer(serializers.ModelSerializer):
     def validate(self, data):
         
         if self.context["request"].method == 'PATCH':
-            if len(data['students']) <= settings.MAX_STUDENTS_PER_COURSE:
-                return data
+            if 'students' in data:
+                if len(data['students']) <= settings.MAX_STUDENTS_PER_COURSE:
+                    return data
+                else:
+                    raise serializers.ValidationError("Слишком много студентов")
             else:
-                raise serializers.ValidationError("Слишком много студентов")
+                return data
         elif self.context["request"].method == 'POST':
             return data

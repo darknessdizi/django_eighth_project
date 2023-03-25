@@ -24,10 +24,10 @@ def test_create_course(api_client):
 def test_first_course(api_client, factory_course):
     '''  Получение первого курса  '''
 
-    url = reverse('courses-detail', args='1')
+    course = factory_course(_quantity=5)
+    url = reverse('courses-detail', args=str(course[0].id))
     # url = reverse('courses-list')
     # assert url == '/api/v1/courses/1/'
-    course = factory_course(_quantity=5)
     response = api_client.get(url)
     data = response.json()
     assert response.status_code == 200
@@ -92,7 +92,7 @@ def test_update_course(api_client, factory_course):
 
 
 @pytest.mark.django_db(transaction=True, reset_sequences=True)
-def test_update_course(api_client, factory_course):
+def test_delete_course(api_client, factory_course):
     '''  Удаление курса  '''
 
     course = factory_course(_quantity=5)
